@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
+import { TRPCProvider } from "./Providers/providers";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,6 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "E-Commerce Mimic",
   description: "Made by Joseph Caballero",
+  icons: {},
 };
 
 export default function RootLayout({
@@ -25,13 +28,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} 
+      <body>
+        <TRPCProvider>
+          <div
+            className={`${geistSans.variable} ${geistMono.variable} 
         antialiased flex flex-col items-center 
-        justify-center h-24 text-[#666] header`}
-      >
-        <Header />
-        {children}
+        justify-center h-24 text-[#666]`}
+          >
+            <Header />
+          </div>
+          <div className="overflow-x-clip items-center flex justify-center">
+            <Toaster position="bottom-right" />
+            {children}
+          </div>
+        </TRPCProvider>
       </body>
     </html>
   );
